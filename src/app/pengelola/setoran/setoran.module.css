@@ -1,0 +1,382 @@
+/* ─── Step Indicator ─────────────────────────────────────── */
+.stepIndicator {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  margin-bottom: 2.5rem;
+}
+
+.step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.4rem;
+  flex: 1;
+  position: relative;
+}
+
+.stepCircle {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 2px solid var(--border);
+  background-color: var(--card);
+  color: var(--text-muted);
+  font-size: 0.85rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s, border-color 0.2s, color 0.2s;
+  z-index: 1;
+}
+
+.step.active .stepCircle {
+  background-color: var(--primary);
+  border-color: var(--primary);
+  color: white;
+  box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.2);
+}
+
+.step.done .stepCircle {
+  background-color: var(--primary);
+  border-color: var(--primary);
+  color: white;
+}
+
+.stepLabel {
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  white-space: nowrap;
+  font-weight: 500;
+}
+
+.step.active .stepLabel {
+  color: var(--primary);
+  font-weight: 700;
+}
+
+.stepConnector {
+  flex: 1;
+  height: 2px;
+  background-color: var(--border);
+  margin-bottom: 1.4rem;
+  transition: background 0.2s;
+}
+
+.stepConnector.done {
+  background-color: var(--primary);
+}
+
+/* ─── Section Card ───────────────────────────────────────── */
+.card {
+  background-color: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 1rem;
+  overflow: hidden;
+  margin-bottom: 1.5rem;
+}
+
+.cardHeader {
+  padding: 1.25rem 1.5rem;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.cardHeaderIcon {
+  font-size: 1.3rem;
+}
+
+.cardHeaderTitle {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--foreground);
+}
+
+.cardBody {
+  padding: 1.5rem;
+}
+
+/* ─── Member search & list ───────────────────────────────── */
+.searchInput {
+  width: 100%;
+  padding: 0.7rem 1rem;
+  border-radius: 0.6rem;
+  border: 1px solid var(--border);
+  background-color: var(--background);
+  color: var(--foreground);
+  font-size: 0.9rem;
+  margin-bottom: 1rem;
+  transition: border-color 0.15s;
+}
+.searchInput:focus {
+  outline: none;
+  border-color: var(--primary);
+}
+
+.memberGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 0.75rem;
+  max-height: 340px;
+  overflow-y: auto;
+  padding-right: 0.25rem;
+}
+
+.memberCard {
+  padding: 0.875rem 1rem;
+  border-radius: 0.75rem;
+  border: 2px solid var(--border);
+  background-color: var(--background);
+  cursor: pointer;
+  transition: border-color 0.15s, background-color 0.15s, transform 0.1s;
+  text-align: left;
+}
+
+.memberCard:hover {
+  border-color: var(--primary);
+  background-color: rgba(16, 185, 129, 0.04);
+  transform: translateY(-1px);
+}
+
+.memberCard.selected {
+  border-color: var(--primary);
+  background-color: rgba(16, 185, 129, 0.08);
+}
+
+.memberName {
+  font-weight: 700;
+  font-size: 0.9rem;
+  color: var(--foreground);
+  margin-bottom: 0.2rem;
+}
+
+.memberEmail {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+/* ─── Category select ────────────────────────────────────── */
+.formGroup {
+  margin-bottom: 1.25rem;
+}
+
+.formLabel {
+  display: block;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--foreground);
+  margin-bottom: 0.5rem;
+}
+
+.formSelect,
+.formInput {
+  width: 100%;
+  padding: 0.65rem 0.875rem;
+  border-radius: 0.5rem;
+  border: 1px solid var(--border);
+  background-color: var(--background);
+  color: var(--foreground);
+  font-size: 0.95rem;
+  font-family: inherit;
+  transition: border-color 0.15s;
+}
+
+.formSelect:focus,
+.formInput:focus {
+  outline: none;
+  border-color: var(--primary);
+}
+
+.formHint {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  margin-top: 0.3rem;
+}
+
+/* ─── Preview card ───────────────────────────────────────── */
+.previewGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem 2rem;
+  margin-bottom: 1.5rem;
+}
+
+.previewItem {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.previewLabel {
+  font-size: 0.72rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-muted);
+}
+
+.previewValue {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--foreground);
+}
+
+.divider {
+  border: none;
+  border-top: 1px solid var(--border);
+  margin: 1rem 0;
+}
+
+.totalRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 1.25rem;
+  background: linear-gradient(135deg, rgba(16,185,129,0.08), rgba(5,150,105,0.12));
+  border-radius: 0.75rem;
+  border: 1px solid rgba(16,185,129,0.25);
+}
+
+.totalLabel {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--foreground);
+}
+
+.totalValue {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: var(--primary);
+  font-variant-numeric: tabular-nums;
+}
+
+/* ─── Live calc badge ────────────────────────────────────── */
+.calcBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin-top: 0.75rem;
+  padding: 0.5rem 0.875rem;
+  border-radius: 0.5rem;
+  background-color: rgba(16,185,129,0.08);
+  border: 1px solid rgba(16,185,129,0.2);
+  font-size: 0.82rem;
+  color: var(--primary);
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+/* ─── Action bar ─────────────────────────────────────────── */
+.actionBar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+/* ─── Error / Success alert ──────────────────────────────── */
+.alertError {
+  background-color: rgba(239, 68, 68, 0.08);
+  border: 1px solid rgba(239, 68, 68, 0.3);
+  color: var(--danger, #ef4444);
+  padding: 0.875rem 1.125rem;
+  border-radius: 0.75rem;
+  font-size: 0.875rem;
+  margin-bottom: 1rem;
+  display: flex;
+  gap: 0.5rem;
+  align-items: flex-start;
+}
+
+.successScreen {
+  text-align: center;
+  padding: 3rem 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+.successIcon {
+  font-size: 4rem;
+  animation: popIn 0.4s ease-out;
+}
+
+@keyframes popIn {
+  0%   { transform: scale(0.5); opacity: 0; }
+  70%  { transform: scale(1.15); }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+.successTitle {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: var(--primary);
+}
+
+.successSubtitle {
+  color: var(--text-muted);
+  font-size: 0.95rem;
+  max-width: 360px;
+}
+
+.successDetails {
+  background-color: var(--background);
+  border: 1px solid var(--border);
+  border-radius: 0.75rem;
+  padding: 1rem 1.5rem;
+  text-align: left;
+  width: 100%;
+  max-width: 380px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  font-size: 0.9rem;
+}
+
+.successDetailRow {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.successDetailLabel {
+  color: var(--text-muted);
+}
+
+.successDetailValue {
+  font-weight: 600;
+  text-align: right;
+}
+
+/* ─── Empty state ────────────────────────────────────────── */
+.emptyState {
+  text-align: center;
+  padding: 2.5rem 1rem;
+  color: var(--text-muted);
+  font-size: 0.9rem;
+}
+
+.emptyStateIcon {
+  font-size: 2.5rem;
+  margin-bottom: 0.5rem;
+}
+
+/* ─── Responsive ─────────────────────────────────────────── */
+@media (max-width: 640px) {
+  .previewGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .memberGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .actionBar {
+    flex-direction: column-reverse;
+  }
+}

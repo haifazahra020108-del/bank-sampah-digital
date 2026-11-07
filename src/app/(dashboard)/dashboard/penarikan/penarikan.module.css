@@ -1,0 +1,127 @@
+.card {
+  background-color: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 1rem;
+  overflow: hidden;
+  margin-bottom: 1.5rem;
+}
+
+.cardHeader {
+  padding: 1.25rem 1.5rem;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.cardHeaderIcon {
+  font-size: 1.3rem;
+}
+
+.cardHeaderTitle {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--foreground);
+}
+
+.cardBody {
+  padding: 1.5rem;
+}
+
+.alertError {
+  background-color: rgba(239, 68, 68, 0.08);
+  border: 1px solid rgba(239, 68, 68, 0.3);
+  color: var(--danger, #ef4444);
+  padding: 0.875rem 1.125rem;
+  border-radius: 0.75rem;
+  font-size: 0.875rem;
+  margin-bottom: 1.5rem;
+  display: flex;
+  gap: 0.5rem;
+  align-items: flex-start;
+}
+
+.alertSuccess {
+  background-color: rgba(16, 185, 129, 0.08);
+  border: 1px solid rgba(16, 185, 129, 0.3);
+  color: var(--primary);
+  padding: 0.875rem 1.125rem;
+  border-radius: 0.75rem;
+  font-size: 0.875rem;
+  margin-bottom: 1.5rem;
+  display: flex;
+  gap: 0.5rem;
+  align-items: flex-start;
+}
+
+.balanceInfo {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 1.25rem;
+  background: linear-gradient(135deg, rgba(16,185,129,0.08), rgba(5,150,105,0.12));
+  border-radius: 0.75rem;
+  border: 1px solid rgba(16,185,129,0.25);
+  margin-bottom: 1.5rem;
+}
+
+.balanceLabel {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--foreground);
+}
+
+.balanceValue {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: var(--primary);
+  font-variant-numeric: tabular-nums;
+}
+
+.formGroup {
+  margin-bottom: 1.5rem;
+}
+
+.formLabel {
+  display: block;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--foreground);
+  margin-bottom: 0.5rem;
+}
+
+.formInput {
+  width: 100%;
+  padding: 0.65rem 0.875rem;
+  border-radius: 0.5rem;
+  border: 1px solid var(--border);
+  background-color: var(--background);
+  color: var(--foreground);
+  font-size: 0.95rem;
+  font-family: inherit;
+  transition: border-color 0.15s;
+}
+
+.formInput:focus {
+  outline: none;
+  border-color: var(--primary);
+}
+
+.formInput:disabled {
+  background-color: var(--border);
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.formHint {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  margin-top: 0.4rem;
+}
+
+.actionBar {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+  margin-top: 2rem;
+}

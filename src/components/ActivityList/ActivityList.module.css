@@ -1,0 +1,118 @@
+.container {
+  background-color: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 1rem;
+  overflow: hidden;
+}
+
+.title {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--foreground);
+  padding: 1.25rem 1.5rem;
+  border-bottom: 1px solid var(--border);
+}
+
+/* ─── Empty State ─── */
+.empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 3rem 2rem;
+  color: var(--text-muted);
+  font-size: 0.9rem;
+}
+
+.emptyIcon {
+  font-size: 2.5rem;
+}
+
+/* ─── Table ─── */
+.tableWrapper {
+  overflow-x: auto;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.875rem;
+}
+
+.table thead tr {
+  background-color: var(--background);
+}
+
+.table th {
+  padding: 0.75rem 1rem;
+  text-align: left;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  white-space: nowrap;
+}
+
+.table td {
+  padding: 0.875rem 1rem;
+  border-top: 1px solid var(--border);
+  color: var(--foreground);
+  vertical-align: middle;
+}
+
+.table tbody tr {
+  transition: background-color 0.15s;
+}
+
+.table tbody tr:hover {
+  background-color: var(--background);
+}
+
+/* ─── Cell Variants ─── */
+.memberCell {
+  display: flex;
+  align-items: center;
+  gap: 0.625rem;
+}
+
+.memberAvatar {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--primary), #059669);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.75rem;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.categoryBadge {
+  display: inline-block;
+  background-color: rgba(16, 185, 129, 0.1);
+  color: var(--primary);
+  padding: 0.2rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.78rem;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.numericCell {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+.valueCell {
+  font-weight: 600;
+  color: var(--primary);
+}
+
+.dateCell {
+  color: var(--text-muted);
+  font-size: 0.82rem;
+  white-space: nowrap;
+}

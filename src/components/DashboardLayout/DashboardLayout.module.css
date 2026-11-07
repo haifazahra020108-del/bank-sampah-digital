@@ -1,0 +1,278 @@
+.layout {
+  display: flex;
+  min-height: 100vh;
+  background-color: var(--background);
+}
+
+/* ─── Sidebar ─── */
+.sidebar {
+  width: 260px;
+  min-width: 260px;
+  background-color: var(--card);
+  border-right: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow-y: auto;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 1.5rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.brandIcon {
+  font-size: 2rem;
+  line-height: 1;
+}
+
+.brandName {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--primary);
+  line-height: 1.2;
+}
+
+.brandSub {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+.nav {
+  padding: 1rem 0.75rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  flex: 1;
+}
+
+.navItem {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem 1rem;
+  border-radius: 0.625rem;
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  font-weight: 500;
+  transition: all 0.15s ease;
+  cursor: pointer;
+}
+
+.navItem:hover {
+  background-color: var(--background);
+  color: var(--foreground);
+}
+
+.navItemActive {
+  background: linear-gradient(135deg, rgba(16, 185, 129, 0.15), rgba(16, 185, 129, 0.08));
+  color: var(--primary);
+  font-weight: 600;
+}
+
+.navIcon {
+  font-size: 1.1rem;
+  width: 1.5rem;
+  text-align: center;
+  flex-shrink: 0;
+}
+
+.sidebarFooter {
+  padding: 1rem;
+  border-top: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.userInfo {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.5rem;
+}
+
+.userMeta {
+  flex: 1;
+  min-width: 0;
+}
+
+.userName {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--foreground);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.logoutForm {
+  width: 100%;
+}
+
+/* ─── Avatar ─── */
+.avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--primary), #059669);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 0.85rem;
+  flex-shrink: 0;
+}
+
+.avatarSidebar {
+  width: 40px;
+  height: 40px;
+}
+
+/* ─── Badge ─── */
+.badge {
+  display: inline-block;
+  padding: 0.15rem 0.5rem;
+  border-radius: 999px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+}
+
+.badgeAdmin {
+  background-color: rgba(239, 68, 68, 0.12);
+  color: #ef4444;
+}
+
+.badgeManager {
+  background-color: rgba(59, 130, 246, 0.12);
+  color: #3b82f6;
+}
+
+.badgeMember {
+  background-color: rgba(16, 185, 129, 0.12);
+  color: var(--primary);
+}
+
+/* ─── Main Content ─── */
+.mainWrapper {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.topbar {
+  height: 64px;
+  background-color: var(--card);
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 2rem;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.topbarLeft {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.mobileToggleBtn {
+  display: none;
+  font-size: 1.5rem;
+  color: var(--foreground);
+  background: none;
+  border: none;
+  padding: 0.25rem;
+  cursor: pointer;
+}
+
+.topbarTitle {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--foreground);
+}
+
+.topbarRight {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.topbarUser {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.topbarName {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--foreground);
+  text-align: right;
+}
+
+.topbarRole {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  text-align: right;
+}
+
+.content {
+  padding: 2rem;
+  flex: 1;
+  overflow-y: auto;
+}
+
+/* ─── Responsive ─── */
+@media (max-width: 768px) {
+  .sidebar {
+    position: fixed;
+    transform: translateX(-100%);
+    transition: transform 0.3s ease-in-out;
+    z-index: 50;
+    box-shadow: 4px 0 10px rgba(0,0,0,0.1);
+  }
+
+  .sidebarOpen {
+    transform: translateX(0);
+  }
+
+  .mobileOverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0,0,0,0.5);
+    z-index: 40;
+  }
+
+  .mobileToggleBtn {
+    display: block;
+  }
+
+  .topbar {
+    padding: 0 1rem;
+  }
+
+  .topbarName,
+  .topbarRole {
+    display: none;
+  }
+
+  .content {
+    padding: 1rem;
+  }
+}

@@ -1,0 +1,165 @@
+.card {
+  background-color: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 1rem;
+  overflow: hidden;
+  margin-bottom: 1.5rem;
+}
+
+.cardHeader {
+  padding: 1.25rem 1.5rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.filterGroup {
+  display: flex;
+  gap: 0.5rem;
+  overflow-x: auto;
+  padding-bottom: 0.25rem;
+}
+
+.filterBtn {
+  background: var(--background);
+  border: 1px solid var(--border);
+  padding: 0.5rem 1rem;
+  border-radius: 2rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.2s;
+}
+
+.filterBtn:hover {
+  border-color: var(--primary);
+  color: var(--foreground);
+}
+
+.filterBtn.active {
+  background: var(--primary);
+  border-color: var(--primary);
+  color: white;
+}
+
+.cardBody {
+  padding: 0;
+}
+
+.emptyState {
+  padding: 3rem;
+  text-align: center;
+  color: var(--text-muted);
+  font-size: 0.95rem;
+}
+
+.tableResponsive {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.table th,
+.table td {
+  padding: 1rem 1.5rem;
+  text-align: left;
+  border-bottom: 1px solid var(--border);
+}
+
+.table th {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-muted);
+  font-weight: 600;
+  background-color: rgba(0,0,0,0.01);
+}
+
+.table td {
+  font-size: 0.9rem;
+  vertical-align: middle;
+}
+
+.memberName {
+  font-weight: 700;
+  color: var(--foreground);
+  margin-bottom: 0.15rem;
+}
+
+.memberEmail {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+.amountValue {
+  font-weight: 700;
+  color: var(--primary);
+}
+
+.badgeSuccess {
+  background-color: rgba(16, 185, 129, 0.15);
+  color: var(--primary);
+  padding: 0.35rem 0.65rem;
+  border-radius: 2rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.badgeWarning {
+  background-color: rgba(245, 158, 11, 0.15);
+  color: #d97706;
+  padding: 0.35rem 0.65rem;
+  border-radius: 2rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.badgeError {
+  background-color: rgba(239, 68, 68, 0.15);
+  color: var(--danger, #ef4444);
+  padding: 0.35rem 0.65rem;
+  border-radius: 2rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.badgeNeutral {
+  background-color: var(--border);
+  color: var(--text-muted);
+  padding: 0.35rem 0.65rem;
+  border-radius: 2rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.actionButtons {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.processedText {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  font-style: italic;
+}
+
+.alertError {
+  background-color: rgba(239, 68, 68, 0.08);
+  border: 1px solid rgba(239, 68, 68, 0.3);
+  color: var(--danger, #ef4444);
+  padding: 0.875rem 1.125rem;
+  margin: 1rem 1.5rem;
+  border-radius: 0.75rem;
+  font-size: 0.875rem;
+  display: flex;
+  gap: 0.5rem;
+  align-items: flex-start;
+}

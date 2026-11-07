@@ -1,0 +1,146 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+model User {
+  id        String   @id @default(uuid())
+  name      String
+  email     String   @unique
+  password  String
+  role      String   // "ADMIN", "MANAGER", "MEMBER"
+  contact   String?
+  address   String?
+  status    String   @default("ACTIVE") // "ACTIVE", "INACTIVE"
+  // Telegram: hanya terisi SETELAH identitas anggota terverifikasi lewat kode aktivasi.
+  telegramChatId String?
+  // true bila password dibuat otomatis (sementara) dan wajib diganti saat login pertama.
+  mustChangePassword Boolean @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  transactions         WasteTransaction[] @relation("MemberTransactions")
+  managedTransactions  WasteTransaction[] @relation("ManagerTransactions")
+  withdrawals          Withdrawal[]       @relation("MemberWithdrawals")
+  processedWithdrawals Withdrawal[]       @relation("ManagerWithdrawals")
+  notifications        Notification[]
+  telegramLinkCodes    TelegramLinkCode[]
+}
+
+model WasteCategory {
+  id         String   @id @default(uuid())
+  name       String
+  unit       String   @default("kg")
+  pricePerKg Float
+  isActive   Boolean  @default(true)
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  transactions WasteTransaction[]
+}
+
+model WasteTransaction {
+  id                 String   @id @default(uuid())
+  memberId           String
+  categoryId         String
+  weight             Float
+  pricePerKgSnapshot Float
+  totalValue         Float
+  date               DateTime @default(now())
+  createdById        String
+  status             String   @default("COMPLETED") // "COMPLETED", "CANCELLED"
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
+
+  member   User          @relation("MemberTransactions", fields: [memberId], references: [id])
+  category WasteCategory @relation(fields: [categoryId], references: [id])
+  createdBy User         @relation("ManagerTransactions", fields: [createdById], references: [id])
+}
+
+model Withdrawal {
+  id            String    @id @default(uuid())
+  memberId      String
+  amount        Float
+  requestDate   DateTime  @default(now())
+  status        String    @default("PENDING") // "PENDING", "COMPLETED", "REJECTED"
+  processedById String?
+  completedDate DateTime?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  member      User  @relation("MemberWithdrawals", fields: [memberId], references: [id])
+  processedBy User? @relation("ManagerWithdrawals", fields: [processedById], references: [id])
+}
+
+model Notification {
+  id        String   @id @default(uuid())
+  userId    String
+  title     String
+  message   String
+  type      String   // "TRANSACTION", "WITHDRAWAL", "MEMBER", "SYSTEM"
+  link      String?
+  isRead    Boolean  @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Status pengiriman cermin ke Telegram. Nullable => notifikasi lama tetap utuh
+  // (null = belum pernah dicoba, tidak akan dikirim ulang).
+  // "PENDING" | "SENT" | "FAILED" | "SKIPPED"
+  telegramStatus String? // "PENDING", "SENT", "FAILED", "SKIPPED"
+  telegramSentAt DateTime?
+  telegramError  String? // pesan error tersanitasi, TIDAK PERNAH memuat token/kredensial
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, isRead])
+  @@index([telegramStatus])
+}
+
+/// Kode aktivasi sekali pakai untuk menghubungkan akun Telegram anggota.
+model TelegramLinkCode {
+  id     String @id @default(uuid())
+  userId String
+  // SHA-256 dari kode plaintext. Kode asli tidak pernah disimpan.
+  codeHash String   @unique
+  // Payload terenkripsi (AES-256-GCM) berisi informasi akses awal anggota.
+  // Nullable: hanya diisi saat pendaftaran anggota baru.
+  payloadCipher String?
+  expiresAt DateTime
+  usedAt    DateTime?
+  createdAt DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([expiresAt])
+}
+
+/// Konfigurasi AI Provider terpusat yang dikelola ADMIN.
+model AiConfig {
+  id            String    @id @default(uuid())
+  name          String    @default("Default")
+  provider      String    // "groq", "nvidia", "openai"
+  apiKeyCipher  String    // Nilai API Key terenkripsi authenticated (AES-256-GCM)
+  maskedKey     String    // Masked API key untuk tampilan UI (mis. "gsk_••••••••••••3aB9")
+  baseUrl       String?   // Base URL API provider (nullable untuk kompatibilitas data lama)
+  modelPrimary  String    // Model AI utama
+  modelFallback String?   // Model AI cadangan saat transient error
+  temperature   Float     @default(0.7)
+  maxTokens     Int       @default(2048)
+  timeoutMs     Int       @default(45000)
+  isActive      Boolean   @default(false)
+  version       Int       @default(1)
+  lastTestedAt  DateTime?
+  testStatus    String?   // "SUCCESS", "FAILED"
+  testLatencyMs Int?
+  testMessage   String?   // Pesan hasil pengujian terakhir (tersanitasi)
+  createdById   String?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  @@index([isActive])
+}

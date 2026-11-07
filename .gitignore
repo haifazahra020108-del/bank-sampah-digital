@@ -1,0 +1,33 @@
+# File environment
+.env
+.env.*
+!.env.example
+
+# Database SQLite dan backup
+*.db
+*.db-*
+*.sqlite
+*.sqlite3
+
+# Dependencies
+node_modules/
+
+# Build Next.js
+.next/
+out/
+
+# Log
+*.log
+npm-debug.log*
+
+# TypeScript
+*.tsbuildinfo
+
+# Sistem operasi
+.DS_Store
+Thumbs.db
+
+# Semua file backup database
+*.bak
+*.backup*
+*.db.*
