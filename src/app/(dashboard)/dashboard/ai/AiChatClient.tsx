@@ -32,6 +32,12 @@ const SUGGESTION_GROUPS: Array<{ title: string; questions: string[] }> = [
   },
 ];
 
+let messageSeq = 0;
+function createMessageId(role: 'user' | 'model'): string {
+  messageSeq += 1;
+  return `${role}-${messageSeq}`;
+}
+
 export function AiChatClient({ userName }: { userName: string }) {
   const [messages, setMessages] = useState<Message[]>([]);
   const [inputValue, setInputValue] = useState('');
@@ -52,7 +58,7 @@ export function AiChatClient({ userName }: { userName: string }) {
     isSendingRef.current = true;
 
     const userMessage: Message = {
-      id: Date.now().toString(),
+      id: createMessageId('user'),
       role: 'user',
       content: text
     };
@@ -73,20 +79,20 @@ export function AiChatClient({ userName }: { userName: string }) {
 
       if (response.success && response.data) {
         setMessages(prev => [...prev, {
-          id: (Date.now() + 1).toString(),
+          id: createMessageId('model'),
           role: 'model',
           content: response.data
         }]);
       } else {
         setMessages(prev => [...prev, {
-          id: (Date.now() + 1).toString(),
+          id: createMessageId('model'),
           role: 'model',
           content: 'Maaf, terjadi kesalahan: ' + (response.error || 'Gagal merespons.')
         }]);
       }
-    } catch (error) {
+    } catch {
       setMessages(prev => [...prev, {
-        id: (Date.now() + 1).toString(),
+        id: createMessageId('model'),
         role: 'model',
         content: 'Maaf, terjadi kesalahan jaringan atau server.'
       }]);

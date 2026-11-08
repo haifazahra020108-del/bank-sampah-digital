@@ -31,7 +31,12 @@ Thumbs.db
 *.bak
 *.backup*
 *.db.*
+prisma/migrations_sqlite_backup/
+prisma/schema.sqlite.prisma
 
 # Standalone SQLite client & scratch
 src/lib/prisma-sqlite/
 test-db.ts
+
+# Test coverage
+coverage/

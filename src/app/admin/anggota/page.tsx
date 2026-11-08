@@ -22,7 +22,7 @@ export default async function AdminAnggotaPage({ searchParams }: PageProps) {
   let error = false;
   try {
     members = await getMembersList(search);
-  } catch (e) {
+  } catch {
     error = true;
   }
 

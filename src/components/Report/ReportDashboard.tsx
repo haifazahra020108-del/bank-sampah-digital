@@ -12,6 +12,8 @@ interface ReportDashboardProps {
   };
 }
 
+type ReportData = NonNullable<Awaited<ReturnType<typeof loadReportDataAction>>['data']>;
+
 function formatCurrency(v: number) {
   return new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0 }).format(v);
 }
@@ -26,7 +28,7 @@ export function ReportDashboard({ filterOptions }: ReportDashboardProps) {
   
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(true);
-  const [data, setData] = useState<any>(null);
+  const [data, setData] = useState<ReportData | null>(null);
   const [error, setError] = useState('');
 
   // Fetch Data
@@ -34,7 +36,7 @@ export function ReportDashboard({ filterOptions }: ReportDashboardProps) {
     setLoading(true);
     setError('');
     const res = await loadReportDataAction({ startDate, endDate, categoryId, memberId, status }, page);
-    if (res.success) {
+    if (res.success && res.data) {
       setData(res.data);
     } else {
       setError(res.error ?? 'Error loading data');
@@ -171,7 +173,7 @@ export function ReportDashboard({ filterOptions }: ReportDashboardProps) {
           <p style={{ color: 'var(--text-muted)' }}>Tidak ada data pada periode ini.</p>
         ) : (
           <div className={styles.breakdownList}>
-            {data?.aggregates.categoryBreakdown.map((c: any) => (
+            {data?.aggregates.categoryBreakdown.map((c) => (
               <div key={c.categoryId} className={styles.breakdownItem}>
                 <span className={styles.breakdownName}>{c.categoryName}</span>
                 <div className={styles.breakdownStats}>
@@ -213,7 +215,7 @@ export function ReportDashboard({ filterOptions }: ReportDashboardProps) {
                   </td>
                 </tr>
               ) : (
-                data?.transactions.map((tx: any) => (
+                data?.transactions.map((tx) => (
                   <tr key={tx.id}>
                     <td>{new Date(tx.date).toLocaleDateString('id-ID', { day: 'numeric', month: 'short', year: 'numeric' })}</td>
                     <td>

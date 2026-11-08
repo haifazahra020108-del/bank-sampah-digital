@@ -25,7 +25,7 @@ export async function requestWithdrawalAction(formData: FormData) {
 
   try {
     // Gunakan Prisma transaction untuk melakukan pengecekan saldo secara atomis
-    const result = await prisma.$transaction(async (tx) => {
+    await prisma.$transaction(async (tx) => {
       // 1. Hitung total setoran yang sudah COMPLETED
       const completedDeposits = await tx.wasteTransaction.aggregate({
         where: { memberId: session.userId, status: 'COMPLETED' },
@@ -115,9 +115,10 @@ export async function requestWithdrawalAction(formData: FormData) {
 
     return { success: true, message: 'Pengajuan penarikan berhasil dibuat. Menunggu persetujuan.' };
 
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error('Error requesting withdrawal:', error);
-    return { success: false, message: error.message || 'Terjadi kesalahan sistem.' };
+    const message = error instanceof Error ? error.message : 'Terjadi kesalahan sistem.';
+    return { success: false, message };
   }
 }
 

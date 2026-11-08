@@ -1,7 +1,6 @@
 'use client';
 
 import React, { useActionState } from 'react';
-import Link from 'next/link';
 import { Button } from '@/components/Button/Button';
 import { Input } from '@/components/Input/Input';
 import styles from './login.module.css';
@@ -25,20 +24,20 @@ export default function LoginPage() {
             </div>
           )}
 
-          <Input 
-            label="Email" 
+          <Input
+            label="Email"
             name="email"
-            type="email" 
-            placeholder="Masukkan email Anda" 
-            required 
+            type="email"
+            placeholder="Masukkan email Anda"
+            required
           />
-          
-          <Input 
-            label="Password" 
+
+          <Input
+            label="Password"
             name="password"
-            type="password" 
-            placeholder="Masukkan password Anda" 
-            required 
+            type="password"
+            placeholder="Masukkan password Anda"
+            required
           />
 
           <div className={styles.actions}>

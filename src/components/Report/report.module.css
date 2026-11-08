@@ -233,9 +233,6 @@
 
 /* ─── PRINT STYLES ─── */
 @media print {
-  body * {
-    visibility: hidden;
-  }
   .reportContainer, .reportContainer * {
     visibility: visible;
   }

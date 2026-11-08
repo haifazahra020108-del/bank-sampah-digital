@@ -25,6 +25,12 @@ const STORAGE_PREFIX = 'banksampah_ai_chat_';
 /** Key that tracks which user+role owns the current session's chat history */
 const ACTIVE_OWNER_KEY = 'banksampah_ai_active_owner';
 
+let messageSeq = 0;
+function createMessageId(role: string): string {
+  messageSeq += 1;
+  return `${role}-${messageSeq}-${Date.now()}`;
+}
+
 const SUGGESTION_GROUPS: Array<{ title: string; questions: string[] }> = [
   {
     title: 'Tentang fitur aplikasi',
@@ -132,31 +138,6 @@ export function FloatingChatWidget({ userName, userId, userRole, initialOpen = f
     }
   }, [isOpen]);
 
-  // Close on Escape key and listen to custom "open-ai-chat" event
-  useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === 'Escape' && isOpen) {
-        setIsOpen(false);
-      }
-    };
-
-    const handleCustomOpen = (e: Event) => {
-      setIsOpen(true);
-      const customEvent = e as CustomEvent<{ message?: string }>;
-      if (customEvent.detail?.message) {
-        handleSend(customEvent.detail.message);
-      }
-    };
-
-    window.addEventListener('keydown', handleKeyDown);
-    window.addEventListener('open-ai-chat', handleCustomOpen);
-
-    return () => {
-      window.removeEventListener('keydown', handleKeyDown);
-      window.removeEventListener('open-ai-chat', handleCustomOpen);
-    };
-  }, [isOpen]);
-
   const handleSend = useCallback(
     async (text: string) => {
       const trimmed = text.trim();
@@ -165,7 +146,7 @@ export function FloatingChatWidget({ userName, userId, userRole, initialOpen = f
       isSendingRef.current = true;
 
       const userMessage: Message = {
-        id: Date.now().toString(),
+        id: createMessageId('user'),
         role: 'user',
         content: trimmed,
       };
@@ -192,7 +173,7 @@ export function FloatingChatWidget({ userName, userId, userRole, initialOpen = f
           setMessages((prev) => [
             ...prev,
             {
-              id: (Date.now() + 1).toString(),
+              id: createMessageId('model'),
               role: 'model',
               content: response.data!,
             },
@@ -201,7 +182,7 @@ export function FloatingChatWidget({ userName, userId, userRole, initialOpen = f
           setMessages((prev) => [
             ...prev,
             {
-              id: (Date.now() + 1).toString(),
+              id: createMessageId('model'),
               role: 'model',
               content:
                 'Maaf, terjadi kesalahan: ' +
@@ -214,7 +195,7 @@ export function FloatingChatWidget({ userName, userId, userRole, initialOpen = f
         setMessages((prev) => [
           ...prev,
           {
-            id: (Date.now() + 1).toString(),
+            id: createMessageId('model'),
             role: 'model',
             content: 'Maaf, terjadi kesalahan jaringan atau server. Pastikan koneksi internet stabil.',
             isError: true,
@@ -227,6 +208,31 @@ export function FloatingChatWidget({ userName, userId, userRole, initialOpen = f
     },
     [isLoading, messages]
   );
+
+  // Close on Escape key and listen to custom "open-ai-chat" event
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape' && isOpen) {
+        setIsOpen(false);
+      }
+    };
+
+    const handleCustomOpen = (e: Event) => {
+      setIsOpen(true);
+      const customEvent = e as CustomEvent<{ message?: string }>;
+      if (customEvent.detail?.message) {
+        handleSend(customEvent.detail.message);
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    window.addEventListener('open-ai-chat', handleCustomOpen);
+
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+      window.removeEventListener('open-ai-chat', handleCustomOpen);
+    };
+  }, [isOpen, handleSend]);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();

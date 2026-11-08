@@ -1,0 +1,60 @@
+name: CI Pipeline
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  ci:
+    name: Lint, Test & Build
+    runs-on: ubuntu-latest
+
+    # Environment variables khusus CI (dummy / non-production)
+    # Menjamin isolasi penuh dari database produksi Neon dan mencegah kebocoran kredensial
+    env:
+      CI: 'true'
+      NODE_ENV: test
+      NEXT_TELEMETRY_DISABLED: 1
+      DATABASE_URL: 'postgresql://ci_dummy:ci_dummy@localhost:5432/ci_dummy?sslmode=disable'
+      DATABASE_URL_UNPOOLED: 'postgresql://ci_dummy:ci_dummy@localhost:5432/ci_dummy?sslmode=disable'
+      NEXTAUTH_SECRET: 'ci-dummy-nextauth-secret-key-min-32-chars!!'
+      AI_CONFIG_ENCRYPTION_KEY: 'ci-dummy-ai-encryption-key-min-32chars!'
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js 20.x
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20.x
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Generate Prisma Client
+        run: npx prisma generate
+
+      - name: Run ESLint
+        run: npm run lint
+
+      - name: Run TypeScript typecheck
+        run: npx tsc --noEmit
+
+      - name: Run Unit Tests
+        run: npm test
+
+      - name: Run Next.js Production Build
+        run: npm run build
+        env:
+          NODE_ENV: production
+

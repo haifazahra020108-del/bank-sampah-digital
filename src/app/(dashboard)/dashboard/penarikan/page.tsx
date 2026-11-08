@@ -24,7 +24,7 @@ export default async function PenarikanPage() {
   let error = false;
   try {
     balanceData = await getMemberBalance(session.userId);
-  } catch (e) {
+  } catch {
     error = true;
   }
 

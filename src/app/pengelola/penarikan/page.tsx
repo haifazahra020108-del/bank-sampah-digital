@@ -16,11 +16,11 @@ export default async function KelolaPenarikanPage() {
     redirect('/forbidden');
   }
 
-  let withdrawals: any[] = [];
+  let withdrawals: Awaited<ReturnType<typeof getAllWithdrawalRequests>> = [];
   let error = false;
   try {
     withdrawals = await getAllWithdrawalRequests();
-  } catch (e) {
+  } catch {
     error = true;
   }
 

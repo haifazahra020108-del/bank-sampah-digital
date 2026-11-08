@@ -1,6 +1,5 @@
 import React from 'react';
 import { redirect } from 'next/navigation';
-import Link from 'next/link';
 import { getSession } from '@/utils/session';
 import { DashboardLayout } from '@/components/DashboardLayout/DashboardLayout';
 import { StatCard } from '@/components/StatCard/StatCard';
@@ -27,7 +26,7 @@ export default async function PengelolaPage() {
   let error = false;
   try {
     stats = await getManagerDashboardStats();
-  } catch (e) {
+  } catch {
     error = true;
   }
 

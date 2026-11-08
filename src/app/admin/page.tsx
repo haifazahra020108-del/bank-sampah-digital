@@ -25,7 +25,7 @@ export default async function AdminDashboardPage() {
   let error = false;
   try {
     stats = await getAdminDashboardStats();
-  } catch (e) {
+  } catch {
     error = true;
   }
 

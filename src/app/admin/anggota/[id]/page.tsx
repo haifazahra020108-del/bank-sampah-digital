@@ -4,7 +4,6 @@ import { getSession } from '@/utils/session';
 import { DashboardLayout } from '@/components/DashboardLayout/DashboardLayout';
 import { MemberDetail } from '@/components/Member/MemberDetail';
 import { getMemberDetail } from '@/services/member';
-import styles from '../../admin.module.css';
 
 interface PageProps {
   params: Promise<{ id: string }>;

@@ -3,7 +3,6 @@ import { redirect } from 'next/navigation';
 import { getSession } from '@/utils/session';
 import { DashboardLayout } from '@/components/DashboardLayout/DashboardLayout';
 import { getMemberWithdrawals } from '@/services/withdrawal';
-import { getMemberDashboardStats } from '@/services/dashboard.member';
 import { getMemberTransactions } from '@/services/transaction';
 import styles from '../dashboard.module.css';
 
@@ -42,21 +41,18 @@ export default async function TransaksiPage() {
     redirect('/dashboard/ganti-password');
   }
 
-  let withdrawals: any[] = [];
-  let transactions: any[] = [];
-  let stats = null;
+  let withdrawals: Awaited<ReturnType<typeof getMemberWithdrawals>> = [];
+  let transactions: Awaited<ReturnType<typeof getMemberTransactions>> = [];
   let error = false;
 
   try {
-    const [w, tx, s] = await Promise.all([
+    const [w, tx] = await Promise.all([
       getMemberWithdrawals(session.userId),
       getMemberTransactions(session.userId),
-      getMemberDashboardStats(session.userId)
     ]);
     withdrawals = w;
     transactions = tx;
-    stats = s;
-  } catch (e) {
+  } catch {
     error = true;
   }
 
@@ -77,7 +73,7 @@ export default async function TransaksiPage() {
         </div>
       ) : (
         <div className={styles.transactionGrids}>
-          
+
           <div className={styles.section}>
             <h2 className={styles.sectionTitle}>💰 Riwayat Penarikan</h2>
             <div className={styles.card}>
