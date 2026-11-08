@@ -31,3 +31,7 @@ Thumbs.db
 *.bak
 *.backup*
 *.db.*
+
+# Standalone SQLite client & scratch
+src/lib/prisma-sqlite/
+test-db.ts

@@ -440,7 +440,7 @@ export function AiConfigClient({ initialData }: AiConfigClientProps) {
                 <div className={styles.savedKeyBadge}>
                   <span>🔒</span>
                   <div>
-                    <strong>Sumber Kredensial: Tersimpan di Database (SQLite)</strong>
+                    <strong>Sumber Kredensial: Tersimpan di Database</strong>
                     <div style={{ fontSize: '0.8rem', marginTop: '0.2rem', color: 'var(--foreground)' }}>
                       API Key tersimpan aman dengan enkripsi AES-256-GCM (topeng: <code className={styles.codePill}>{existingDbRecordForProvider?.maskedKey}</code>). Tidak perlu memasukkan ulang.
                     </div>
@@ -460,7 +460,7 @@ export function AiConfigClient({ initialData }: AiConfigClientProps) {
                     <strong>Sumber Kredensial: Bootstrap Environment (.env.local)</strong>
                     <div style={{ fontSize: '0.8rem', marginTop: '0.2rem', color: 'var(--foreground)' }}>
                       Key aktif saat ini bertopeng <code className={styles.codePill}>{data.active.maskedKey}</code>.
-                      Penyimpanan pertama akan mengenkripsi (AES-256-GCM) dan menyimpan kredensial ini ke database SQLite tanpa mengekspos kunci asli.
+                      Penyimpanan pertama akan mengenkripsi (AES-256-GCM) dan menyimpan kredensial ini ke database tanpa mengekspos kunci asli.
                     </div>
                   </div>
                 </div>
@@ -759,7 +759,7 @@ export function AiConfigClient({ initialData }: AiConfigClientProps) {
                 <span>📜</span> Riwayat & Preset Konfigurasi
               </h2>
               <p className={styles.cardDescription}>
-                Daftar konfigurasi yang tersimpan di SQLite. Anda dapat mengaktifkan konfigurasi lama sewaktu-waktu
+                Daftar konfigurasi yang tersimpan di database. Anda dapat mengaktifkan konfigurasi lama sewaktu-waktu
                 (fitur rollback instan).
               </p>
             </div>
