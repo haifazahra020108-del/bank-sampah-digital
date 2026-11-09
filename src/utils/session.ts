@@ -1,7 +1,12 @@
 import { jwtVerify, SignJWT } from 'jose';
 import { cookies } from 'next/headers';
 
-const secretKey = process.env.NEXTAUTH_SECRET || 'fallback-secret-key-for-dev';
+const secretKey = process.env.NEXTAUTH_SECRET;
+
+if (!secretKey) {
+  throw new Error('NEXTAUTH_SECRET belum dikonfigurasi');
+}
+
 const key = new TextEncoder().encode(secretKey);
 
 export type SessionPayload = {
